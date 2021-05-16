@@ -1,0 +1,18 @@
+{
+    "C_Cpp.clang_format_style": "file",
+    "[cpp]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2,
+        // 保存時に自動整形
+        "editor.formatOnSave": true,
+        // Add a single empty line as the last line in the code - clang-format - Stack Overflow
+        // https://stackoverflow.com/a/55374798/9316234
+        "files.insertFinalNewline": true,
+        "files.trimFinalNewlines": true,
+    },
+    "files.associations": {
+        "string": "cpp",
+        "string_view": "cpp",
+        "regex": "cpp"
+    },
+}
