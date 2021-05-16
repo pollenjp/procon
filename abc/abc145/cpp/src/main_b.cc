@@ -17,7 +17,6 @@ int main() {
   std::string answer;
   if (solve(N, S)) {
     answer = "Yes";
-
   } else {
     answer = "No";
   }
