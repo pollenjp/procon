@@ -4,7 +4,7 @@ cc_binary(
     deps = [],
 )
 
-# cc_binary(
-#     name = "main_a",
-#     srcs = ["src/main_a.cc"],
-# )
+cc_binary(
+    name = "main_b",
+    srcs = ["main_b.cc"],
+)
