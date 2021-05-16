@@ -21,8 +21,8 @@ class Point2D {
 
   static double length(const Point2D &p0, const Point2D &p1) {
     double x, y;
-    x = p0.x - p1.x;
-    y = p0.y - p1.y;
+    x = static_cast<double>(p0.x - p1.x);
+    y = static_cast<double>(p0.y - p1.y);
     return std::sqrt(std::pow(x, 2) + std::pow(y, 2));
   }
   double length(const Point2D &p0) const { return Point2D::length(p0, *this); }
