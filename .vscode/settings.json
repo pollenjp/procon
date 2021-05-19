@@ -1,4 +1,15 @@
 {
+    ///////////
+    // Bazel //
+    ///////////
+    // https://github.com/bazelbuild/vscode-bazel/issues/132
+    "bazel.buildifierExecutable": "${env:HOME}/.goenv/shims/buildifier", // goenv
+    "bazel.buildifierFixOnFormat": true,
+    "bazel.commandLine.commandArgs": [
+        "--test_output=all",
+    ],
+    "bazel.enableCodeLens": true,
+    // CPP
     "C_Cpp.clang_format_style": "file",
     "[cpp]": {
         "editor.insertSpaces": true,
