@@ -2,6 +2,8 @@
 
 #include <vector>
 
+namespace {
+
 int solve(const std::vector<int> &a_vector) {
   std::vector<int> b_vector(a_vector);
   int times(0);
@@ -23,3 +25,5 @@ int solve(const std::vector<int> &a_vector) {
   }
   return times;
 }
+
+}  // namespace
