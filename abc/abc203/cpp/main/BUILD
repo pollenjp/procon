@@ -54,6 +54,33 @@ cc_binary(
     ],
 )
 
+#####
+# C #
+#####
+
+cc_library(
+    name = "SolverC",
+    srcs = [],
+    hdrs = [
+        "src/c/solver.h",
+    ],
+    includes = ["src"],
+    deps = [],
+)
+
+cc_binary(
+    name = "main_c",
+    srcs = glob(
+        include = [
+            "src/main_c.cc",
+        ],
+        exclude = [],
+    ),
+    deps = [
+        ":SolverC",
+    ],
+)
+
 ########
 # test #
 ########
@@ -70,6 +97,7 @@ cc_test(
     deps = [
         ":SolverA",
         ":SolverB",
+        ":SolverC",
         "@gtest",
         "@gtest//:gtest_main",
     ],
