@@ -24,13 +24,10 @@ TEST(SolverCTest, CustomSample2) {
       static_cast<long long>(1e+15) - 1);
 }
 
-TEST(SolverCTest, CustomSample3) {
-  EXPECT_EQ(solve(1, 2, static_cast<long long>(1e+15)),
-            static_cast<long long>(1e+15) / 2 - 1);
-}
-
 TEST(SolverCTest, CustomSample4) { EXPECT_EQ(solve(1001, 301, 1), 200); }
 
 TEST(SolverCTest, CustomSample5) { EXPECT_EQ(solve(1001, 301, 501), 450); }
 
 TEST(SolverCTest, CustomSample6) { EXPECT_EQ(solve(300, 300, 300), 0); }
+
+TEST(SolverCTest, CustomSample7) { EXPECT_EQ(solve(1, 6, 14), 3); }

@@ -13,7 +13,7 @@ long long solve(const long long a1, const long long a2, const long long a3) {
     quotient = diff / 2;
     answer = quotient;
     if (diff % 2 == 1) {
-      answer += 1;
+      answer += 2;
     }
   } else {
     answer = -diff;
