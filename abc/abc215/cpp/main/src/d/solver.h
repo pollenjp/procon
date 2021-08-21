@@ -1,51 +1,63 @@
 #include <algorithm>
 #include <iostream>
-#include <map>
 #include <string>
 #include <vector>
 
 namespace {
 
-std::vector<int> Eratosthenes(const int n) {
-  std::vector<bool> is_prime(n + 1);
-  for (int i = 0; i <= n; i++) {
-    is_prime[i] = true;
+/**
+ * @brief 素因数分解
+ * T : int-like
+ */
+template <typename T>
+std::vector<std::pair<T, T>> PrimeFactorize(T n) {
+  std::vector<std::pair<T, T>> ret;
+
+  if (n <= 0) {
+    throw std::invalid_argument("n must be positive");
   }
-  std::vector<int> primes;
-  for (int i = 2; i <= n; i++) {
-    if (is_prime[i]) {
-      for (int j = 2 * i; j <= n; j += i) {
-        is_prime[j] = false;
-      }
-      primes.emplace_back(i);
+
+  for (T i = 2; i * i <= n; i++) {
+    if (n % i != 0) {
+      continue;
     }
+    T squre_times(0);
+    while (n % i == 0) {
+      squre_times++;
+      n /= i;
+    }
+    ret.push_back(std::make_pair(i, squre_times));
   }
-  return primes;
+  if (n != 1) {
+    ret.push_back(std::make_pair(n, 1));
+  }
+  return ret;
 }
 
-std::vector<int> solve(const int n, const int m, std::vector<int> vec) {
-  std::vector<int> valid_numbers({});
-  std::vector<int> primes_below_m = Eratosthenes(m);
+std::vector<int> solve(const int n, const int m, const std::vector<int> &vec) {
+  std::vector<int> valid_numbers;
+  int max_num = *std::max_element(vec.begin(), vec.end());
+  max_num = std::max(max_num, m);
+  std::vector<bool> is_valid_num_vec(max_num + 1, true);
 
-  if (n >= 1) {
-    valid_numbers.push_back(1);
-  }
-  for (std::size_t i = 0; i < primes_below_m.size(); ++i) {
-    bool is_valid = true;
-    for (std::size_t j = 0; j < vec.size(); ++j) {
-      if (vec[j] % primes_below_m[i] == 0) {
-        is_valid = false;
-        break;
+  for (auto &val : vec) {
+    auto primes = PrimeFactorize(val);
+    for (auto &prime_pair : primes) {
+      if (!is_valid_num_vec[prime_pair.first]) {
+        continue;
+      }
+      for (auto i = prime_pair.first; i <= max_num; i += prime_pair.first) {
+        is_valid_num_vec[i] = false;
       }
     }
+  }
 
-    if (is_valid) {
-      // std::cout << primes_below_m[i] << std::endl;
-      valid_numbers.push_back(primes_below_m[i]);
+  for (int i = 1; i <= m; i++) {
+    if (is_valid_num_vec[i]) {
+      valid_numbers.push_back(i);
     }
   }
 
   return valid_numbers;
 }
-
 }  // namespace
