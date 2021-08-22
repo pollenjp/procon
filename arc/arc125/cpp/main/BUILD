@@ -1,0 +1,44 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
+
+#####
+# A #
+#####
+
+cc_library(
+    name = "SolverA",
+    srcs = [],
+    hdrs = [
+        "src/a/solver.h",
+    ],
+    includes = ["src"],
+    deps = [],
+)
+
+cc_binary(
+    name = "main_a",
+    srcs = glob(
+        include = [
+            "src/main_a.cc",
+        ],
+        exclude = [],
+    ),
+    deps = [
+        ":SolverA",
+    ],
+)
+
+cc_test(
+    name = "test_a",
+    timeout = "short",
+    srcs = glob(
+        include = [
+            "test/a/solver_test.cc",
+        ],
+        exclude = [],
+    ),
+    deps = [
+        ":SolverA",
+        "@gtest",
+        "@gtest//:gtest_main",
+    ],
+)
