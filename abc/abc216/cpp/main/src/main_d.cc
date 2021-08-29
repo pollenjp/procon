@@ -1,4 +1,5 @@
 #include <iostream>
+#include <queue>
 #include <vector>
 
 #include "d/solver.h"
@@ -9,14 +10,14 @@ int main() {
   std::cin >> n >> m;
 
   std::vector<int> k_vec(m);
-  std::vector<std::vector<int>> a_vec(m, std::vector<int>());
+  std::vector<std::queue<int>> a_vec(m);
 
   for (auto i = 0; i < m; i++) {
     std::cin >> k_vec[i];
     for (auto j = 0; j < k_vec[i]; j++) {
       int a;
       std::cin >> a;
-      a_vec[i].push_back(a);
+      a_vec[i].push(a);
     }
   }
 
