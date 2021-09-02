@@ -1,0 +1,8 @@
+# Ignore all bazel-* symlinks. There is no full list since this can change
+# based on the name of the directory bazel is cloned into.
+# <https://github.com/bazelbuild/bazel/blob/7dda6849ff19d556ff8272853bd1ad792debdf07/.gitignore#L14-L16>
+/bazel-*
+# Bazelisk version file, use .bazeliskrc
+.bazelversion
+# User-specific .bazelrc
+user.bazelrc

@@ -1,0 +1,12 @@
+build --enable_platform_specific_config
+
+# Build with C++ 17 features
+build:c++17 --cxxopt=-std=c++1z
+build:c++17 --cxxopt=-stdlib=libc++
+build:c++1z --config=c++17
+build:c++17_gcc --cxxopt=-std=c++1z
+build:c++1z_gcc --config=c++17_gcc
+
+# By default
+build:linux --config=c++17_gcc
+build:linux --host_cxxopt=-std=c++14
