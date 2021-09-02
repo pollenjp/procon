@@ -2,8 +2,20 @@
 
 #include "gtest/gtest.h"
 
-TEST(SolverATest, Sample1) { EXPECT_EQ(solve(214), 8); }
+namespace arc215 {
 
-TEST(SolverATest, Sample2) { EXPECT_EQ(solve(1), 4); }
+namespace {}  // namespace
 
-TEST(SolverATest, Sample3) { EXPECT_EQ(solve(126), 6); }
+TEST(SolverATest, Sample1) {
+  std::vector<int> s_vec({0, 0, 1});
+  std::vector<int> t_vec({0, 1, 1, 0});
+  EXPECT_EQ(solve(s_vec, t_vec), 6);
+}
+
+TEST(SolverATest, Sample2) {
+  std::vector<int> s_vec({0});
+  std::vector<int> t_vec({1});
+  EXPECT_EQ(solve(s_vec, t_vec), -1);
+}
+
+}  // namespace arc215

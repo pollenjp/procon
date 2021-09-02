@@ -6,7 +6,9 @@ load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
 
 cc_library(
     name = "SolverA",
-    srcs = [],
+    srcs = [
+        "src/a/solver.cc",
+    ],
     hdrs = [
         "src/a/solver.h",
     ],
@@ -19,6 +21,19 @@ cc_binary(
     srcs = glob(
         include = [
             "src/main_a.cc",
+        ],
+        exclude = [],
+    ),
+    deps = [
+        ":SolverA",
+    ],
+)
+
+cc_binary(
+    name = "main_a2",
+    srcs = glob(
+        include = [
+            "src2/main_a.cc",
         ],
         exclude = [],
     ),
