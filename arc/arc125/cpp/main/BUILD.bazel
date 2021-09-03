@@ -29,19 +29,6 @@ cc_binary(
     ],
 )
 
-cc_binary(
-    name = "main_a2",
-    srcs = glob(
-        include = [
-            "src2/main_a.cc",
-        ],
-        exclude = [],
-    ),
-    deps = [
-        ":SolverA",
-    ],
-)
-
 cc_test(
     name = "test_a",
     timeout = "short",
