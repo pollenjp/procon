@@ -1,4 +1,5 @@
-import bisect 
+import bisect
+
 
 def main():
 
@@ -14,7 +15,6 @@ def main():
     added_list = []
     q: str
     for q in query:
-        # print(f"q = {q}")
         if q[0] == "1":
             _, x = list(map(int, q.split()))
             added_list.append(x)
@@ -28,9 +28,8 @@ def main():
                 a = sorted(added_list)
             else:
                 for x in added_list:
-                    bisect.insort(a, x) 
+                    bisect.insort(a, x)
             added_list = []
-            should_sort_flag = False
         else:
             raise Exception()
 
