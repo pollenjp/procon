@@ -6,7 +6,9 @@ load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
 
 cc_library(
     name = "SolverA",
-    srcs = [],
+    srcs = [
+        "src/a/solver.cc",
+    ],
     hdrs = [
         "src/a/solver.h",
     ],
@@ -33,7 +35,9 @@ cc_binary(
 
 cc_library(
     name = "SolverB",
-    srcs = [],
+    srcs = [
+        "src/b/solver.cc",
+    ],
     hdrs = [
         "src/b/solver.h",
     ],
