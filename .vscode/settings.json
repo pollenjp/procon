@@ -2,8 +2,6 @@
     ///////////
     // Bazel //
     ///////////
-    // https://github.com/bazelbuild/vscode-bazel/issues/132
-    "bazel.buildifierExecutable": "${env:HOME}/.goenv/shims/buildifier", // goenv
     "bazel.buildifierFixOnFormat": true,
     "bazel.commandLine.commandArgs": [
         "--test_output=all",
@@ -11,6 +9,10 @@
     "bazel.enableCodeLens": true,
     // CPP
     "C_Cpp.clang_format_style": "file",
+    "clang-tidy.compilerArgs": [
+        "-std=c++14",
+        "-libstd=libc++",
+    ],
     "[cpp]": {
         "editor.insertSpaces": true,
         "editor.tabSize": 2,
@@ -24,6 +26,44 @@
     "files.associations": {
         "string": "cpp",
         "string_view": "cpp",
-        "regex": "cpp"
+        "regex": "cpp",
+        "ostream": "cpp",
+        "array": "cpp",
+        "*.tcc": "cpp",
+        "cctype": "cpp",
+        "clocale": "cpp",
+        "cmath": "cpp",
+        "cstddef": "cpp",
+        "cstdint": "cpp",
+        "cstdio": "cpp",
+        "cstdlib": "cpp",
+        "ctime": "cpp",
+        "cwchar": "cpp",
+        "cwctype": "cpp",
+        "deque": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp",
+        "exception": "cpp",
+        "fstream": "cpp",
+        "functional": "cpp",
+        "initializer_list": "cpp",
+        "iomanip": "cpp",
+        "iosfwd": "cpp",
+        "iostream": "cpp",
+        "istream": "cpp",
+        "limits": "cpp",
+        "memory": "cpp",
+        "new": "cpp",
+        "optional": "cpp",
+        "sstream": "cpp",
+        "stdexcept": "cpp",
+        "streambuf": "cpp",
+        "system_error": "cpp",
+        "type_traits": "cpp",
+        "tuple": "cpp",
+        "typeinfo": "cpp",
+        "utility": "cpp",
+        "algorithm": "cpp"
     },
+    // "C_Cpp.intelliSenseEngine": "Default",
 }
