@@ -1,0 +1,28 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
+
+#####
+# D #
+#####
+
+cc_library(
+    name = "SolverD",
+    srcs = [],
+    hdrs = [
+        "src/d/solver.h",
+    ],
+    includes = ["src"],
+    deps = [],
+)
+
+cc_binary(
+    name = "main_d",
+    srcs = glob(
+        include = [
+            "src/main_d.cc",
+        ],
+        exclude = [],
+    ),
+    deps = [
+        ":SolverD",
+    ],
+)
