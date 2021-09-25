@@ -2,7 +2,12 @@
 
 ## C++
 
-using Bazel
+using Bazel, glog (+ gflags)
+
+```sh
+bazelisk run //arc/arc127/cpp:main_a -- --log_dir $(pwd)/logs
+bazelisk test --test_output=all //arc/arc127/cpp:test_a
+```
 
 ## Python
 
