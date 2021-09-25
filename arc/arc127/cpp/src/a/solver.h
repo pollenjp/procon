@@ -8,7 +8,6 @@
 namespace arc127 {
 
 const int64_t kBaseNumber(10);
-// 1000000000000000
 
 int64_t solve(const int64_t n) {
   int32_t num_of_digits(0);

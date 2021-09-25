@@ -28,4 +28,10 @@ TEST(SolverATest, AtCoder_01_005) {
   EXPECT_EQ(solve(input_n), ans);
 }
 
+TEST(SolverATest, AtCoder_01_006) {
+  int64_t input_n(642087521202247);
+  int64_t ans(123456790123455);
+  EXPECT_EQ(solve(input_n), ans);
+}
+
 }  // namespace arc127
