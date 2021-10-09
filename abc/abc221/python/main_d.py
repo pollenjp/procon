@@ -1,9 +1,6 @@
 import logging
-import pprint
 from logging import getLogger
 from typing import List, Tuple
-
-import numpy as np
 
 logging.basicConfig(
     format="[%(asctime)s][%(levelname)s][%(filename)s:%(lineno)d] - %(message)s",
