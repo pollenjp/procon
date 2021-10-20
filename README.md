@@ -1,15 +1,28 @@
 # atcoder
 
-## C++
+<https://scrapbox.io/pollenJP-Memo/AtCoder>
+
+## Execution
+
+### C++
 
 using Bazel, glog (+ gflags)
 
+run code
+
 ```sh
-bazelisk run //arc/arc127/cpp:main_a -- --log_dir $(pwd)/logs
-bazelisk test --test_output=all //arc/arc127/cpp:test_a
+logdir=$(realpath logs_glog);\
+  mkdir -p ${logdir} && \
+  bazelisk run contests/dp/cpp:main_a -- --log_dir ${logdir}
 ```
 
-## Python
+run test
+
+```sh
+bazelisk test --test_output=all contests/dp/cpp:test_a:test_a
+```
+
+### Python
 
 - Python version : 3.8.2
   - example
