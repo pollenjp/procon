@@ -22,6 +22,25 @@ run test
 bazelisk test --test_output=all contests/dp/cpp:test_a:test_a
 ```
 
+### go
+
+using gazelle
+
+```sh
+make build
+```
+
+```sh
+bazelisk run contests/practice/golang/a
+```
+
+or directly `go run`
+
+```sh
+cd contests/practice/golang/a
+go run .
+```
+
 ### Python
 
 - Python version : 3.8.2
