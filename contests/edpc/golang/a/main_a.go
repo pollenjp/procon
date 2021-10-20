@@ -19,7 +19,10 @@ func main() {
 	cost_dp[0] = 0
 	cost_dp[1] = int32(math.Abs(float64(h_slice[0] - h_slice[1])))
 	for i := int32(2); i < n; i++ {
-		cost_dp[i] = int32(math.Min(float64(cost_dp[i-2])+math.Abs(float64(h_slice[i])-float64(h_slice[i-2])), float64(cost_dp[i-1])+math.Abs(float64(h_slice[i])-float64(h_slice[i-1]))))
+		cost_dp[i] = int32(
+			math.Min(
+				float64(cost_dp[i-2])+math.Abs(float64(h_slice[i])-float64(h_slice[i-2])),
+				float64(cost_dp[i-1])+math.Abs(float64(h_slice[i])-float64(h_slice[i-1]))))
 	}
 
 	log.Println(cost_dp)
