@@ -113,22 +113,6 @@ cc_binary(
     ],
 )
 
-cc_test(
-    name = "test_C",
-    timeout = "short",
-    srcs = glob(
-        include = [
-            "test/c/solver_test.cc",
-        ],
-        exclude = [],
-    ),
-    deps = [
-        ":SolverC",
-        "@gtest",
-        "@gtest//:gtest_main",
-    ],
-)
-
 #####
 # D #
 #####
@@ -153,43 +137,5 @@ cc_binary(
     ),
     deps = [
         ":SolverD",
-    ],
-)
-
-cc_test(
-    name = "test_D",
-    timeout = "short",
-    srcs = glob(
-        include = [
-            "test/d/solver_test.cc",
-        ],
-        exclude = [],
-    ),
-    deps = [
-        ":SolverD",
-        "@gtest",
-        "@gtest//:gtest_main",
-    ],
-)
-
-########
-# test #
-########
-
-cc_test(
-    name = "test_all",
-    timeout = "short",
-    srcs = glob(
-        include = [
-            "test/*/solver_test.cc",
-        ],
-        exclude = [],
-    ),
-    deps = [
-        ":SolverA",
-        ":SolverB",
-        ":SolverC",
-        "@gtest",
-        "@gtest//:gtest_main",
     ],
 )

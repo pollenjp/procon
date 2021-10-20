@@ -128,25 +128,3 @@ cc_test(
         "@gtest//:gtest_main",
     ],
 )
-
-########
-# test #
-########
-
-cc_test(
-    name = "test_all",
-    timeout = "short",
-    srcs = glob(
-        include = [
-            "test/*/solver_test.cc",
-        ],
-        exclude = [],
-    ),
-    deps = [
-        ":SolverA",
-        ":SolverB",
-        ":SolverC",
-        "@gtest",
-        "@gtest//:gtest_main",
-    ],
-)
