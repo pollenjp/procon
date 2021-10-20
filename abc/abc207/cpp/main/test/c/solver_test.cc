@@ -5,7 +5,6 @@
 #include "gtest/gtest.h"
 
 TEST(SolverCTest, Sample1) {
-  int N = 19;
   std::vector<std::vector<int>> vec = {
       {1, 1, 2},
       {2, 2, 3},
@@ -15,8 +14,6 @@ TEST(SolverCTest, Sample1) {
 }
 
 TEST(SolverCTest, Sample2) {
-  int N = 19;
-
   std::vector<std::vector<int>> vec = {
       {4, 210068409, 221208102}, {4, 16698200, 910945203},
       {4, 76268400, 259148323},  {4, 370943597, 566244098},

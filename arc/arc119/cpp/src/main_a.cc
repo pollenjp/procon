@@ -3,7 +3,7 @@
 #include <limits>
 
 long long solve(const long long n) {
-  long long a0, b0(0), c0(0);
+  long long a0(0), c0(0);
   long double b1 = std::log2(static_cast<long double>(n));
   long long b2 = static_cast<long double>(std::floor(b1));
   long long a_b_c_min = -1;
