@@ -16,7 +16,7 @@ gazelle:  ## gazelle によって設定ファイルを自動生成する
 
 .PHONY: test
 test:
-	${BAZEL_CMD} test //...
+	${BAZEL_CMD} test --test_output=all //...
 
 .PHONY: clean
 clean:
