@@ -1,0 +1,39 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
+
+cc_library(
+    name = "SolverC",
+    srcs = [],
+    hdrs = [
+        "src/c/solver.h",
+    ],
+    includes = ["src"],
+    deps = ["@com_github_google_glog//:glog"],
+)
+
+cc_binary(
+    name = "main_c",
+    srcs = glob(
+        include = [
+            "src/main_c.cc",
+        ],
+        exclude = [],
+    ),
+    deps = [
+        ":SolverC",
+    ],
+)
+
+cc_test(
+    name = "test_all",
+    srcs = glob(
+        include = [
+            "test/*/solver_test.cc",
+        ],
+        exclude = [],
+    ),
+    deps = [
+        ":SolverC",
+        "@gtest",
+        "@gtest//:gtest_main",
+    ],
+)
