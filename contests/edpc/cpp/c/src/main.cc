@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "solver.h"
+#include "pollenlib/solver.h"
 
 int main(int argc, char* argv[]) {
   google::InitGoogleLogging(argv[0]);

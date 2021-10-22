@@ -4,9 +4,9 @@ cc_library(
     name = "Solver",
     srcs = [],
     hdrs = [
-        "src/lib/solver.h",
+        "src/pollenlib/solver.h",
     ],
-    includes = ["src/lib"],
+    includes = ["src"],
     deps = ["@com_github_google_glog//:glog"],
 )
 
