@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "c/solver.h"
+#include "solver.h"
 
 int main(int argc, char* argv[]) {
   google::InitGoogleLogging(argv[0]);
