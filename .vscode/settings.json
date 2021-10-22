@@ -45,4 +45,17 @@
             "source.organizeImports": true
         },
     },
+    // ファイルブラウザに表示しない
+    "files.exclude": {
+        "**/bazel-*": true,
+        "**/.git": true,
+        "**/.DS_Store": true, // MacOS Finder
+        "**/._.DS_Store": true, // MacOS sshfs
+        "**/__pycache__": true, // python
+        "**/.ipynb_checkpoints": true, // jupyter notebook
+    },
+    // ファイルブラウザには表示するが、検索から除外する
+    "search.exclude": {
+        "**/notebooks": true,
+    },
 }
