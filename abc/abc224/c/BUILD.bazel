@@ -23,17 +23,17 @@ cc_binary(
     ],
 )
 
-# cc_test(
-#     name = "test",
-#     srcs = glob(
-#         include = [
-#             "test/*_test.cc",
-#         ],
-#         exclude = [],
-#     ),
-#     deps = [
-#         ":Solver",
-#         "@gtest",
-#         "@gtest//:gtest_main",
-#     ],
-# )
+cc_test(
+    name = "test",
+    srcs = glob(
+        include = [
+            "test/*_test.cc",
+        ],
+        exclude = [],
+    ),
+    deps = [
+        ":Solver",
+        "@gtest",
+        "@gtest//:gtest_main",
+    ],
+)
