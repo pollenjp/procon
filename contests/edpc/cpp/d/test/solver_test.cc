@@ -109,6 +109,33 @@ TEST(SolverCTest, Sample1_1) {
   EXPECT_EQ(solve(in_data.num_n, in_data.num_w, in_data.w_vec, in_data.v_vec), 90);
 }
 
+TEST(SolverCTest, Sample2) {
+  InData in_data(std::vector<std::string>({
+      "5 5",
+      "1 1000000000",
+      "1 1000000000",
+      "1 1000000000",
+      "1 1000000000",
+      "1 1000000000",
+  }));
+
+  EXPECT_EQ(solve(in_data.num_n, in_data.num_w, in_data.w_vec, in_data.v_vec), 5000000000);
+}
+
+TEST(SolverCTest, Sample3) {
+  InData in_data(std::vector<std::string>({
+      "6 15",
+      "6 5",
+      "5 6",
+      "6 4",
+      "6 6",
+      "3 5",
+      "7 2",
+  }));
+
+  EXPECT_EQ(solve(in_data.num_n, in_data.num_w, in_data.w_vec, in_data.v_vec), 17);
+}
+
 }  // namespace d
 
 }  // namespace edpc
