@@ -8,9 +8,10 @@ logging.basicConfig(
 logger = getLogger(__name__)
 logger.setLevel(logging.INFO)
 
+
 def main():
 
-    input_s= input().rstrip()
+    input_s: str = input().rstrip()
 
     if input_s[-1] == "r":
         print("er")

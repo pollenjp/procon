@@ -15,7 +15,7 @@ logger.setLevel(logging.INFO)
 logger.info(
     textwrap.indent(
         textwrap.dedent(
-            f"""
+            """
             sample
             """.rstrip()
         ),

@@ -12,6 +12,7 @@ logger.setLevel(logging.INFO)
 
 def main():
     input_n: int = int(input().rstrip())
+    del input_n
     input_a_list: List[int] = list(map(int, input().rstrip().split(" ")))
     input_x: int = int(input().rstrip())
 
