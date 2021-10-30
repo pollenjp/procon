@@ -13,9 +13,13 @@ isort = "5.9.3"
 mypy = "0.910"
 cmake = "*"
 cmakelang = "*"
+nox = "*"
 
 [requires]
 python_full_version = "3.8.2"
 
 [pipenv]
 allow_prereleases = true
+
+[scripts]
+nox-lint = "nox --session lint"

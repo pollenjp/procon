@@ -28,6 +28,13 @@ go-format:
 		-regex ".*\.go" \
 		-exec goimports -w -local ${GO_PACKAGE} {} \;
 
+
+.PHONY: python-lint
+python-lint:
+	isort --check .
+	flake8 .
+	black --check .
+
 .PHONY: go-lint
 go-lint:
 	@find ${ROOT} -type d -regextype posix-extended \
