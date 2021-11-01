@@ -1,5 +1,5 @@
 import logging
-import math
+from decimal import Decimal
 from logging import getLogger
 from typing import List, Tuple
 
@@ -27,11 +27,11 @@ def main():
     # (start, end)
     tangent_list: List[Tuple[int, int]] = []
     for x, y in xy_cooridnates:
-        start: float = (y - 1) / x
+        start: Decimal = Decimal(y - 1) / Decimal(x)
         if x - 1 > 0:
-            end: float = y / (x - 1)
+            end: Decimal = Decimal(y) / Decimal(x - 1)
         else:
-            end: float = INF
+            end: Decimal = Decimal(INF)
         tangent_list.append((start, end))
 
     # 終了位置でソート
@@ -39,7 +39,7 @@ def main():
     logger.info(tangent_list_sorted)
 
     cnt: int = 0
-    current_tangent: float = 0
+    current_tangent: Decimal = Decimal(0)
     for start, end in tangent_list_sorted:
         if current_tangent <= start:
             cnt += 1
