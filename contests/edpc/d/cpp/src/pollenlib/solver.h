@@ -33,7 +33,6 @@ int64_t solve(int32_t num_n, int32_t num_w, std::vector<int32_t> &w_vec, std::ve
     LOG(INFO) << "dp[0][" << w << "]: " << dp[0][w];
   }
 
-  // int64_t reward_max(0);
   for (int32_t i = 1; i < num_n; i++) {
     for (int32_t w = 0; w <= num_w; w++) {
       if (w_vec[i] > w) {
