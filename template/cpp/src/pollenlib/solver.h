@@ -18,8 +18,6 @@ class Fraction {
   T denominator_;
 
  public:
-  // explicit Fraction(T numerator, T denominator = static_cast<T>(1)) : numerator(numerator), denominator(denominator)
-  // {}
   Fraction(T numerator = static_cast<T>(0), T denominator = static_cast<T>(1))
       : numerator_(numerator), denominator_(denominator) {}
 
@@ -48,9 +46,9 @@ int64_t solve(std::vector<std::pair<int64_t, int64_t>> const &xy_list) {
   Fraction<int64_t> current_end;
 
   for (auto end_start_pair : end_start_list) {
-    // LOG(INFO) << "current_end=" << current_end.String() << ", start=" << end_start_pair.second.String()
-    // << ", end=" << end_start_pair.first.String();
-    // LOG(INFO) << (current_end <= end_start_pair.second);
+    LOG(INFO) << "current_end=" << current_end.String() << ", start=" << end_start_pair.second.String()
+              << ", end=" << end_start_pair.first.String();
+    LOG(INFO) << (current_end <= end_start_pair.second);
     if (current_end <= end_start_pair.second) {
       cnt++;
       current_end = end_start_pair.first;
