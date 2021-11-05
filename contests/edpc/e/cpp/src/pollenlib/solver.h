@@ -1,4 +1,4 @@
-// #include <glog/logging.h>
+#include <glog/logging.h>
 
 #include <cstdint>
 #include <numeric>
