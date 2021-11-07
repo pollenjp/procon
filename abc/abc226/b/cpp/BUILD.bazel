@@ -1,0 +1,38 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary")
+
+# cc_library(
+#     name = "Solver",
+#     srcs = [],
+#     hdrs = [
+#         "src/pollenlib/solver.h",
+#     ],
+#     includes = ["src"],
+#     deps = ["@com_github_google_glog//:glog"],
+# )
+
+cc_binary(
+    name = "main",
+    srcs = glob(
+        include = [
+            "src/main.cc",
+        ],
+        exclude = [],
+    ),
+    deps = [
+    ],
+)
+
+cc_test(
+    name = "test",
+    srcs = glob(
+        include = [
+            "test/*_test.cc",
+        ],
+        exclude = [],
+    ),
+    deps = [
+        # ":Solver",
+        "@gtest",
+        "@gtest//:gtest_main",
+    ],
+)
