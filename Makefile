@@ -1,4 +1,4 @@
-SHELL := $(shell which bash)
+SHELL := bash
 
 ROOT := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 export BAZEL_CMD := bazelisk
@@ -24,7 +24,7 @@ clean:
 
 .PHONY: go-format
 go-format:
-	@find . -type f -regextype posix-extended \
+	find . -type f -regextype posix-extended \
 		-regex ".*\.go" \
 		-exec goimports -w -local ${GO_PACKAGE} {} \;
 
@@ -37,14 +37,5 @@ python-lint:
 
 .PHONY: go-lint
 go-lint:
-	@find ${ROOT} -type d -regextype posix-extended \
-		-regex ".*/section[0-9]{2}/step[0-9]{2}" \
-		-print0 | \
-		while IFS= read -r -d '' line; do \
-			old_cwd=$(pwd) ; \
-			cd $$line ; \
-			echo "linting $$line" ; \
-			staticcheck ./... ; \
-			go vet ./... ; \
-			cd $$old_cwd ; \
-		done
+	-staticcheck ./...
+	-go vet ./...
