@@ -1,14 +1,14 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary")
 
-# cc_library(
-#     name = "Solver",
-#     srcs = [],
-#     hdrs = [
-#         "src/pollenlib/solver.h",
-#     ],
-#     includes = ["src"],
-#     deps = ["@com_github_google_glog//:glog"],
-# )
+cc_library(
+    name = "Solver",
+    srcs = [],
+    hdrs = [
+        "src/pollenlib/solver.h",
+    ],
+    includes = ["src"],
+    deps = ["@com_github_google_glog//:glog"],
+)
 
 cc_binary(
     name = "main",
@@ -19,6 +19,7 @@ cc_binary(
         exclude = [],
     ),
     deps = [
+        ":Solver",
     ],
 )
 
