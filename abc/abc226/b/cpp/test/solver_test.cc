@@ -7,9 +7,9 @@
 
 namespace atcoder {
 
-namespace abc225 {
+namespace abc226 {
 
-namespace e {
+namespace b {
 
 namespace {
 
@@ -46,24 +46,26 @@ std::vector<std::string> split(std::string str, std::string del) {
  * @brief convert lines to vectors
  *
  * @param lines
- * @param w_vec
- * @param v_vec
+ * @param l_list_list out parameter
  */
-void read_lines(std::vector<std::string> const &lines, std::vector<std::pair<int64_t, int64_t>> &xy_list) {
+void read_lines(std::vector<std::string> const &lines, std::vector<std::vector<int32_t>> &l_list_list) {
   std::string delimiter(" ");
   for (std::size_t i = 0; i < lines.size(); i++) {
     auto line = lines[i];
-    auto val_vec = split(line, delimiter);
-    xy_list[i].first = std::stoi(val_vec[0]);
-    xy_list[i].second = std::stoi(val_vec[1]);
-    LOG(INFO) << "xy_list: " << xy_list[i].first << "," << xy_list[i].second;
+    auto val_list = split(line, delimiter);
+    int32_t num_l(std::stoi(val_list[0]));
+    std::vector<int32_t> l_list(num_l + 1);
+    for (std::size_t j = 0; j < num_l + 1; j++) {
+      l_list[j] = std::stoi(val_list[j]);
+    }
+    l_list_list[i] = l_list;
   }
 }
 
 class InData {
  public:
   int32_t num_n;
-  std::vector<std::pair<int64_t, int64_t>> xy_list;
+  std::vector<std::vector<int32_t>> l_list_list;
 
   InData(std::vector<std::string> const &lines) {
     auto val_vec = split(lines[0], " ");
@@ -72,8 +74,9 @@ class InData {
 
     auto sub_lines = std::vector<std::string>(lines.begin() + 1, lines.end());
 
-    this->xy_list = std::vector<std::pair<int64_t, int64_t>>(num_n);
-    read_lines(sub_lines, this->xy_list);
+    this->l_list_list = std::vector<std::vector<int32_t>>(num_n);
+
+    read_lines(sub_lines, this->l_list_list);
   }
 };
 
@@ -81,35 +84,40 @@ class InData {
 
 TEST(SolverCTest, Sample1) {
   InData in_data(std::vector<std::string>({
-      "3",
-      "1 1",
-      "2 1",
-      "1 2",
+      "4",
+      "2 1 2",
+      "2 1 1",
+      "2 2 1",
+      "2 1 2",
   }));
 
-  EXPECT_EQ(solve(in_data.xy_list), 2);
+  EXPECT_EQ(solve(in_data.l_list_list), 3);
 }
 
 TEST(SolverCTest, Sample2) {
   InData in_data(std::vector<std::string>({
-      "10",
-      "414598724 87552841",
-      "252911401 309688555",
-      "623249116 421714323",
-      "605059493 227199170",
-      "410455266 373748111",
-      "861647548 916369023",
-      "527772558 682124751",
-      "356101507 249887028",
-      "292258775 110762985",
-      "850583108 796044319",
+      "5",
+      "1 1",
+      "1 1",
+      "1 2",
+      "2 1 1",
+      "3 1 1 1",
   }));
 
-  EXPECT_EQ(solve(in_data.xy_list), 10);
+  EXPECT_EQ(solve(in_data.l_list_list), 4);
 }
 
-}  // namespace e
+TEST(SolverCTest, Sample3) {
+  InData in_data(std::vector<std::string>({
+      "1",
+      "1 1",
+  }));
 
-}  // namespace abc225
+  EXPECT_EQ(solve(in_data.l_list_list), 1);
+}
+
+}  // namespace b
+
+}  // namespace abc226
 
 }  // namespace atcoder
