@@ -32,7 +32,7 @@ cc_test(
         exclude = [],
     ),
     deps = [
-        # ":Solver",
+        ":Solver",
         "@gtest",
         "@gtest//:gtest_main",
     ],
