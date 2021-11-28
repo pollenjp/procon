@@ -1,3 +1,4 @@
+*.out
 /.nox_tmp
 /logs_*
 
