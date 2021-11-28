@@ -18,7 +18,7 @@ int main() {
     std::cin >> t_list[i] >> n_list[i] >> c_list[i];
   }
 
-  std::map<int32_t, int64_t> color_cnt_map;
+  std::vector<int64_t> color_cnt_list(num_c, 0);
   std::map<int32_t, int32_t> row_cnt_map;
   std::map<int32_t, int32_t> column_cnt_map;
   // for (int32_t i(1); i <= num_c; ++i) {
@@ -28,27 +28,27 @@ int main() {
   int32_t h_now(num_h);
   int32_t w_now(num_w);
   int32_t t, n, c;
-  for (int32_t i(num_q - 1); i >= -1; i--) {
+  for (int32_t i(num_q - 1); i >= 0; i--) {
     t = t_list[i];
     n = n_list[i];
     c = c_list[i];
     if (t == 1) {
       if (row_cnt_map[n] == 0) {
         row_cnt_map[n]++;
-        color_cnt_map[c] += w_now;
+        color_cnt_list[c - 1] += w_now;
         h_now--;
       }
     } else {  // t == 2
       if (column_cnt_map[n] == 0) {
         column_cnt_map[n]++;
-        color_cnt_map[c] += h_now;
+        color_cnt_list[c - 1] += h_now;
         w_now--;
       }
     }
   }
 
-  for (int32_t i(1); i <= num_c; ++i) {
-    std::cout << color_cnt_map[i] << " ";
+  for (int32_t i = 0; i < num_c; i++) {
+    std::cout << color_cnt_list[i] << " ";
   }
 
   return 0;
