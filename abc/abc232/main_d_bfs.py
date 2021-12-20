@@ -37,7 +37,6 @@ def main():
         while queue:
             # logger.info(f"{queue=}")
             y, x = queue.popleft()
-            vertices_searched.add((y, x))
 
             for offset_y, offset_x in [(1, 0), (0, 1)]:
                 next_y, next_x = y + offset_y, x + offset_x
@@ -45,6 +44,7 @@ def main():
                     max_cost_tile[next_y][next_x] = max(max_cost_tile[next_y][next_x], max_cost_tile[y][x] + 1)
                     max_cost = max(max_cost, max_cost_tile[next_y][next_x])
                     if (next_y, next_x) not in vertices_searched:
+                        vertices_searched.add((next_y, next_x))
                         queue.append((next_y, next_x))
         return max_cost
 
