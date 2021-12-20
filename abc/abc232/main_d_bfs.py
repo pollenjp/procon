@@ -19,7 +19,7 @@ def main():
 
     # 右と下に壁追加
 
-    # size: (h + 2, w + 2)
+    # size: (h + 1, w + 1)
     tile_list: List[str] = []
     for h in range(input_h):
         tile_list.append(input().rstrip() + wall_char)
