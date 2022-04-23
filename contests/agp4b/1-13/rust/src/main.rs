@@ -14,6 +14,7 @@ fn main() {
     dbg!(average);
 
     for val in &v {
+        // println!("{}", val.abs_diff(average)); // Rust v1.60.0
         println!("{}", (val - average).abs());
     }
 }
