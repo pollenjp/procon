@@ -4,15 +4,7 @@ fn main() {
     proconio::input! {
         in_n: usize,
         in_k: usize,
-    }
-
-    let mut s_vec: Vec<String> = Vec::with_capacity(in_n);
-
-    for _ in 0..in_n {
-        proconio::input! {
-            in_s: String,
-        }
-        s_vec.push(in_s);
+        s_vec: [String ; in_n],
     }
 
     // bit full search
