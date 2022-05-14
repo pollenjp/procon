@@ -12,15 +12,11 @@ impl Submission {
     fn to_string(&self) -> String {
         return format!("id:{} / s:{} / time:{}", self.id, self.s, self.time);
     }
-
-    fn Debug(&self) -> String {
-        return format!("id:{} / s:{} / time:{}", self.id, self.s, self.time);
-    }
 }
 
 impl std::fmt::Debug for Submission {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", self.Debug())
+        write!(f, "{}", self.to_string())
     }
 }
 
@@ -35,11 +31,11 @@ impl std::cmp::PartialOrd for Submission {
         return self.time.partial_cmp(&other.time);
     }
 
-    fn lt(&self, other: &Submission) -> bool {
+    fn lt(&self, other: &Self) -> bool {
         return self.time < other.time;
     }
 
-    fn gt(&self, other: &Submission) -> bool {
+    fn gt(&self, other: &Self) -> bool {
         return self.time > other.time;
     }
 }
@@ -71,14 +67,20 @@ fn main() {
     }
 
     let mut s_to_t_set_map: HashMap<String, BTreeSet<Submission>> = HashMap::new();
-
-    s_to_t_set_map.insert("Hello".to_string(), BTreeSet::new());
-    if let Some(x) = s_to_t_set_map.get_mut(&"Hello".to_string()) {
-        x.insert(Submission {
+    for st_val in in_s_t_vec {
+        let s = st_val.s.clone();
+        let submission = Submission {
             id: 0,
-            s: "abc".to_string(),
-            time: 2,
-        });
+            s: st_val.s.clone(),
+            time: st_val.t,
+        };
+        if s_to_t_set_map.contains_key(&s) {
+            s_to_t_set_map.get_mut(&s).unwrap().insert(submission);
+        } else {
+            let mut set: BTreeSet<Submission> = BTreeSet::new();
+            set.insert(submission);
+            s_to_t_set_map.insert(s, set);
+        }
     }
-    dbg!(&s_to_t_set_map[&"Hello".to_string()]);
+    dbg!(&s_to_t_set_map);
 }
