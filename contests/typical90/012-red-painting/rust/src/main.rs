@@ -1,10 +1,52 @@
 use proconio::input;
-fn follow_route(r: usize, c: usize, grid_connect: &Vec<Vec<(usize, usize)>>) -> (usize, usize) {
-    let (mut r, mut c) = (r, c);
-    while (r, c) != grid_connect[r][c] {
-        (r, c) = grid_connect[r][c];
+use std::collections::HashSet;
+
+struct UnionFind {
+    par: Vec<usize>,
+    siz: Vec<usize>,
+}
+
+impl UnionFind {
+    fn new(n: usize) -> Self {
+        UnionFind {
+            par: (0..n).collect(),
+            siz: vec![1; n],
+        }
     }
-    (r, c)
+
+    fn root(&mut self, x: usize) -> usize {
+        if self.par[x] == x {
+            return x;
+        }
+        self.par[x] = self.root(self.par[x]);
+        self.par[x]
+    }
+
+    fn issame(&mut self, x: usize, y: usize) -> bool {
+        self.root(x) == self.root(y)
+    }
+
+    fn unite(&mut self, mut parent: usize, mut child: usize) -> bool {
+        parent = self.root(parent);
+        child = self.root(child);
+
+        if parent == child {
+            return false;
+        }
+
+        if self.siz[parent] < self.siz[child] {
+            std::mem::swap(&mut parent, &mut child);
+        }
+
+        self.par[child] = parent;
+        self.siz[parent] += self.siz[child];
+        true
+    }
+
+    fn size(&mut self, x: usize) -> usize {
+        let root = self.root(x);
+        self.siz[root]
+    }
 }
 
 fn main() {
@@ -14,17 +56,12 @@ fn main() {
         in_q: usize,
     }
 
-    let mut grid_color = vec![vec![0; in_w]; in_h];
+    let mut uf = UnionFind::new(in_h * in_w);
 
-    // 自身のマスが塗られていた場合, 同じく塗られた接続関係にあるマスの中で, 最も row が小さいものの中で, 最も col が小さいものを格納する.
-    // (row, col)
-    let mut grid_connect = vec![vec![(0, 0); in_w]; in_h];
-    for i in 0..grid_connect.len() {
-        for j in 0..grid_connect[i].len() {
-            grid_connect[i][j].0 = i;
-            grid_connect[i][j].1 = j;
-        }
-    }
+    // index is `r * in_w + c`
+    let mut edges = HashSet::<(usize, usize)>::new();
+
+    let mut grid_color = vec![vec![0; in_w]; in_h];
 
     for _ in 0..in_q {
         input! {
@@ -44,12 +81,10 @@ fn main() {
                 let r_offsets = [-1, 0, 1, 0];
                 let c_offsets = [0, -1, 0, 1];
 
-                let mut candidates = vec![];
-
                 for i in 0..r_offsets.len() {
                     let r = q_r as i32 + r_offsets[i];
                     let c = q_c as i32 + c_offsets[i];
-                    if r < 0 || c < 0 || r >= in_w as i32 || c >= in_h as i32 {
+                    if r < 0 || c < 0 || r >= in_h as i32 || c >= in_w as i32 {
                         continue;
                     }
                     let r = r as usize;
@@ -59,24 +94,7 @@ fn main() {
                         continue;
                     }
 
-                    candidates.push((r, c));
-                }
-
-                if candidates.is_empty() {
-                    continue;
-                }
-
-                // update grid_connect partially (candidates)
-
-                // calc min row, col
-                let min_coord = *candidates.iter().min().unwrap();
-
-                // update grid_connect
-                grid_connect[q_r][q_c] = min_coord;
-                for (r, c) in candidates.iter() {
-                    grid_connect[*r][*c] = min_coord;
-                    // grid_connect[*r][*c].0 = min_coord.0;
-                    // grid_connect[*r][*c].1 = min_coord.1;
+                    edges.insert((q_r * in_w + q_c, r * in_w + c));
                 }
             }
             2 => {
@@ -88,17 +106,21 @@ fn main() {
                 }
                 let (q_ra, q_ca, q_rb, q_cb) = (q_ra - 1, q_ca - 1, q_rb - 1, q_cb - 1);
 
-                // check both block is painted
+                // check if both of the cells are painted
                 if grid_color[q_ra][q_ca] != 1 || grid_color[q_rb][q_cb] != 1 {
                     println!("No");
                     continue;
                 }
 
-                // check if the block is connected
+                // update Union-Find
+                for edge in edges.iter() {
+                    uf.unite(edge.0, edge.1);
+                }
+                // edges.clear();
+                edges = HashSet::<(usize, usize)>::new();
 
-                if dbg!(follow_route(q_ra, q_ca, &grid_connect))
-                    == dbg!(follow_route(q_rb, q_cb, &grid_connect))
-                {
+                // get an answer
+                if uf.issame(q_ra * in_w + q_ca, q_rb * in_w + q_cb) {
                     println!("Yes");
                 } else {
                     println!("No");
