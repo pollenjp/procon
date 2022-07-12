@@ -2,42 +2,33 @@ use proconio::input;
 use std::collections::BinaryHeap;
 
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
-struct Edge {
-    src: i32,
-    to: i32,
-    cost: i32,
+struct Edge<T> {
+    src: T,
+    to: T,
+    cost: T,
 }
 
-#[derive(Clone, Debug)]
-struct DijkstraEdge {
-    prev: i32,
-    current: i32,
-    cost: i32,
+#[derive(Clone, Debug, PartialEq, Eq)]
+struct DijkstraEdge<T> {
+    prev: T,
+    current: T,
+    cost: T,
 }
 
-impl std::cmp::PartialEq for DijkstraEdge {
-    fn eq(&self, other: &Self) -> bool {
-        self.cost == other.cost
-    }
-}
-
-impl std::cmp::PartialOrd for DijkstraEdge {
-    fn partial_cmp(&self, other: &DijkstraEdge) -> Option<std::cmp::Ordering> {
+impl<T: std::cmp::PartialOrd> std::cmp::PartialOrd for DijkstraEdge<T> {
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
         self.cost.partial_cmp(&other.cost)
     }
 }
-
-impl std::cmp::Eq for DijkstraEdge {}
-
-impl std::cmp::Ord for DijkstraEdge {
-    fn cmp(&self, other: &DijkstraEdge) -> std::cmp::Ordering {
+impl<T: std::cmp::Ord> std::cmp::Ord for DijkstraEdge<T> {
+    fn cmp(&self, other: &DijkstraEdge<T>) -> std::cmp::Ordering {
         other.cost.cmp(&self.cost)
     }
 }
 
 // i32::MAX
 
-type Graph = Vec<Vec<Edge>>;
+type Graph = Vec<Vec<Edge<i32>>>;
 
 fn dijkstra(graph: &Graph, start: usize) -> (Vec<i32>, Vec<i32>) {
     let mut dist = vec![std::i32::MAX; graph.len()];
@@ -85,7 +76,7 @@ fn main() {
         in_m: usize,
     }
 
-    let mut graph: Graph = vec![Vec::<Edge>::new(); in_n];
+    let mut graph: Graph = vec![vec![]; in_n];
 
     for _ in 0..in_m {
         input! {
