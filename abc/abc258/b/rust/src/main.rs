@@ -61,31 +61,16 @@ fn main() {
             (-1, -1), // up-left
         ];
 
-        type CoordMap = HashMap<(i32, i32), i32>;
-        let mut coords: CoordMap = HashMap::new();
+        let mut max_ret = 0;
+        let time = Instant::now();
+        visited.insert(coord);
+        // for &(r, c) in coords.iter() {
         for (r, c) in coord_offset {
             let next_coord = (modi(coord.0 + r, row_num), modi(coord.1 + c, col_num));
             if visited.contains(&next_coord) {
                 continue;
             }
-            let (r, c) = next_coord;
-            coords.insert(next_coord, table_a[r as usize][c as usize]);
-        }
-
-        if coords.len() == 0 {
-            return -1; // no more path
-        }
-
-        let max_val = coords.iter().map(|(_, v)| *v).max().unwrap();
-
-        let mut max_ret = 0;
-        let time = Instant::now();
-        visited.insert(coord);
-        for (&(r, c), &v) in coords.iter() {
-            if v < max_val {
-                continue;
-            }
-            let ret_s = dfs(table_a, max_visit, (r, c), visited, current_num);
+            let ret_s = dfs(table_a, max_visit, next_coord, visited, current_num);
             if ret_s > max_ret {
                 max_ret = ret_s;
             }
