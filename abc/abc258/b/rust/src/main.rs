@@ -38,23 +38,19 @@ fn main() {
 
     fn dfs(
         table_a: &Vec<Vec<i32>>,
-        max_visit: i32,
+        max_visit: usize,
         coord: (i32, i32),
         visited: &mut HashSet<(i32, i32)>,
         current_num: i32,
     ) -> i32 {
-        if visited.len() == max_visit as usize {
+        if visited.len() == max_visit {
             return current_num;
         }
 
-        let time = Instant::now();
-
         let current_num = current_num * 10 + table_a[coord.0 as usize][coord.1 as usize];
         let (row_num, col_num) = (table_a.len() as i32, table_a[0].len() as i32);
-        // let mut visited = visited.clone();
-        visited.insert(coord);
 
-        let coord_offset = vec![
+        let coord_offset = [
             (0, -1),  // up
             (1, -1),  // up-right
             (1, 0),   // right
@@ -83,6 +79,8 @@ fn main() {
         let max_val = coords.iter().map(|(_, v)| *v).max().unwrap();
 
         let mut max_ret = 0;
+        let time = Instant::now();
+        visited.insert(coord);
         for (&(r, c), &v) in coords.iter() {
             if v < max_val {
                 continue;
@@ -92,12 +90,11 @@ fn main() {
                 max_ret = ret_s;
             }
         }
-
-        if visited.len() == 4 {
-            dbg!(time.elapsed(), current_num);
-        }
-
         visited.remove(&coord);
+
+        if visited.len() == 2 {
+            dbg!(time.elapsed(), max_ret);
+        }
 
         return max_ret;
     }
@@ -106,7 +103,7 @@ fn main() {
     for (i, j) in deq {
         let current_num = dfs(
             &table_a,
-            in_n as i32,
+            in_n,
             (i as i32, j as i32),
             &mut HashSet::from([(i as i32, j as i32)]),
             0,
