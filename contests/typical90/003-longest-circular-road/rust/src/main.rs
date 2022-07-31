@@ -121,13 +121,13 @@ where
     // v: node
     fn bfs(&mut self, v: usize, dp_p: Value<ValueT>, parent: usize) {
         // adjacent node
-        for adj_node_idx in 0..self.graph[v].len() {
-            let Edge { to, weight: _ } = self.graph[v][adj_node_idx];
+        for i in 0..self.graph[v].len() {
+            let Edge { to, weight: _ } = self.graph[v][i];
             if to == std::usize::MAX {
                 panic!("to should not be std::usize::MAX");
             }
             if to == parent {
-                self.dp[v][adj_node_idx] = dp_p;
+                self.dp[v][i] = dp_p;
             }
         }
 
