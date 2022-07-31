@@ -2,6 +2,7 @@ extern crate num;
 
 use proconio::input;
 
+// Monoid
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash)]
 struct Value<T>
 where
@@ -31,11 +32,12 @@ where
         Self { value }
     }
 
+    // 単位元
     fn identity() -> Self {
         Self::new(T::min_value())
     }
 
-    // Binary operation
+    // 二項演算: Binary operation
     fn op(&self, other: &Self) -> Self {
         Self {
             value: std::cmp::max(self.value, other.value),
@@ -50,7 +52,10 @@ where
 {
     // dp[i][j]: i を root としたときの j との関係値
     dp: Vec<Vec<Value<ValueT>>>,
+    // diameters[i]: i を root としたときの木の直径
     diameters: Vec<Value<ValueT>>,
+    // tree
+    // graph[i]p[j]: node i の隣接ノードのうち j 番目への有向辺
     graph: Vec<Vec<Edge<ValueT>>>,
 }
 
@@ -88,6 +93,7 @@ where
         self.bfs(0, Value::<ValueT>::identity(), usize::max_value());
     }
 
+    // tree dp
     // parent: usize. std::usize::MAX if root (root has no parents)
     fn dfs(&mut self, v: usize, parent: usize, weight: &Value<ValueT>) -> Value<ValueT> {
         let mut val = Value::<ValueT>::identity();
@@ -111,6 +117,7 @@ where
         val + *weight
     }
 
+    // rerooting
     // v: node
     fn bfs(&mut self, v: usize, dp_p: Value<ValueT>, parent: usize) {
         // adjacent node
