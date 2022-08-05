@@ -1,4 +1,3 @@
-use core::panic;
 use proconio::input;
 use std::collections::BTreeSet;
 
@@ -35,11 +34,7 @@ fn main() {
             None => {
                 continue;
             }
-            Some(&val) => {
-                if !ans_st.insert(val) {
-                    panic!("duplicate");
-                }
-            }
+            Some(&val) => if !ans_st.insert(val) {},
         }
     }
     // query
@@ -53,29 +48,24 @@ fn main() {
         each_kg_st[kg_pre].remove(&st_val);
         ans_st.remove(&st_val);
         match each_kg_st[kg_pre].iter().next_back() {
-            Some(&val) => {
-                // each_kg_st[kg_pre].remove(&val);
-                _ = ans_st.insert(val)
-            }
+            Some(&val) => if ans_st.insert(val) {},
             None => (),
         }
 
         match each_kg_st[kg].iter().next_back() {
-            Some(&val) => _ = ans_st.remove(&val),
+            Some(&val) => if ans_st.remove(&val) {},
             None => (),
         }
 
         each_kg_st[kg].insert(st_val);
 
         match each_kg_st[kg].iter().next_back() {
-            Some(&val) => _ = ans_st.insert(val),
+            Some(&val) => if ans_st.insert(val) {},
             None => (),
         }
 
         match ans_st.iter().next() {
-            None => {
-                panic!("no answer");
-            }
+            None => {}
             Some(&(score, _kid_id)) => {
                 println!("{}", score);
             }
