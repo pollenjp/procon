@@ -54,25 +54,24 @@ where
         + std::ops::RemAssign,
 {
     fn new(modulo: T, n: Option<usize>) -> Self {
+        if modulo <= T::zero() {
+            panic!("modulo must be positive");
+        }
         let n = n.unwrap_or(0);
 
         let mut fact: Vec<T>;
-        if n > 0 {
-            fact = Vec::with_capacity(n + 1);
-        } else {
-            fact = Vec::new();
-        }
-        fact.push(T::one());
-
         let mut inv: Vec<T>;
         let mut finv: Vec<T>;
         if n > 0 {
+            fact = Vec::with_capacity(n + 1);
             inv = Vec::with_capacity(n + 1);
             finv = Vec::with_capacity(n + 1);
         } else {
+            fact = Vec::new();
             inv = Vec::new();
             finv = Vec::new();
         }
+        fact.push(T::one());
         inv.push(T::zero());
         inv.push(T::one());
         finv.push(T::one());
@@ -194,25 +193,21 @@ fn main() {
             cnt_odd += 1;
         }
     }
+    let cnt_even = in_n - cnt_odd;
 
     let mut fact = FactorialMod::new(MOD_INT as i64, Some(in_n));
 
-    let mut ans: usize = 0;
     // 次数が奇数の点のうち k 個塗るとき
-    let cnt_even = in_n - cnt_odd;
+    let mut ans: usize = 0;
     let k_min = std::cmp::max(0, in_k as i64 - cnt_even as i64) as usize;
     let k_max = std::cmp::min(in_k, cnt_odd) as usize;
-    for k in (k_min..=k_max).step_by(2) {
-        let v1 = fact.binom(cnt_odd, k) as usize;
-        let v2 = fact.binom(cnt_even, in_k - k) as usize;
-        ans += (v1 * v2) % MOD_INT;
-        ans %= MOD_INT;
+    for k in (0..=in_k).step_by(2) {
+        if k_min <= k && k <= k_max {
+            let v1 = fact.binom(cnt_odd, k) as usize;
+            let v2 = fact.binom(cnt_even, in_k - k) as usize;
+            ans += (v1 * v2) % MOD_INT;
+            ans %= MOD_INT;
+        }
     }
-
     println!("{}", ans);
-
-    println!("{}", fact.binom(10, 5));
-    println!("{}", fact.binom(10, 0));
-    println!("{}", fact.binom(10, 1));
-    println!("{}", fact.binom(10, 8));
 }
