@@ -7,32 +7,17 @@ fn main() {
         in_a: [usize; in_k],
     }
 
-    let mut a_arr = in_a.clone();
-    // a_arr.sort();
-    a_arr.reverse();
+    // dp[i] := i 個の石がある山にたいして先手が取れる石の最大値
+    let mut dp = vec![0; in_n + 1];
 
-    let mut ans = 0;
-    let mut num_stones = in_n;
-    let mut turn: usize = 0;
-
-    for &a in a_arr.iter() {
-        let b = 2 * a;
-
-        let q = num_stones / b;
-        ans += q * a;
-
-        let mut r = num_stones % b;
-        if r >= a {
-            if turn == 0 {
-                ans += a;
+    for i in 1..=in_n {
+        for &a in &in_a {
+            if i < a {
+                continue;
             }
-            turn = (turn + 1) % 2;
-            r -= a;
-        }
-        num_stones = r;
-        if num_stones == 0 {
-            break;
+            dp[i] = dp[i].max(i - dp[i - a]);
         }
     }
-    println!("{}", ans);
+
+    println!("{}", dp[in_n]);
 }
