@@ -1,13 +1,116 @@
 use proconio::input;
 
-#[derive(Debug, Copy, Clone)]
-struct Edge {
-    from: usize,
-    to: usize,
-    cost: i64,
+use std::{collections::BinaryHeap, ops::Add};
+
+#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
+struct Edge<T> {
+    src: T,
+    to: T,
+    cost: T,
 }
 
-type Graph = Vec<Vec<Edge>>;
+#[derive(Clone, Debug, PartialEq, Eq)]
+struct DijkstraEdge<T> {
+    prev: T,
+    current: T, // This may should be 'usize'
+    cost: T,
+}
+
+impl<T: std::cmp::PartialOrd> std::cmp::PartialOrd for DijkstraEdge<T> {
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+        self.cost.partial_cmp(&other.cost)
+    }
+}
+impl<T: std::cmp::Ord> std::cmp::Ord for DijkstraEdge<T> {
+    fn cmp(&self, other: &DijkstraEdge<T>) -> std::cmp::Ordering {
+        other.cost.cmp(&self.cost)
+    }
+}
+
+// i32::MAX
+
+type Graph<T> = Vec<Vec<Edge<T>>>;
+
+fn two<T>() -> T
+where
+    T: num::One + num::Integer,
+{
+    T::one() + T::one()
+}
+
+fn dijkstra<T>(graph: &Graph<T>, start: usize) -> (Vec<T>, Vec<T>)
+where
+    T: num::Integer
+        + num::Signed
+        + num::Bounded
+        + num::Zero
+        + num::FromPrimitive
+        + num::ToPrimitive
+        + std::cmp::PartialOrd
+        + std::cmp::Ord
+        + Copy
+        + Clone,
+{
+    let mut dist = vec![T::max_value(); graph.len()];
+    dist[start] = T::zero(); // 開始点は開始点からのコスト距離ゼロ
+
+    // -1 : start
+    // -2 : not connected
+    let mut prevs = vec![-two::<T>(); graph.len()];
+    prevs[start] = -T::one();
+
+    let mut que = BinaryHeap::new();
+    que.push(std::cmp::Reverse(DijkstraEdge::<T> {
+        prev: -T::one(),
+        current: T::from_usize(start).unwrap(),
+        cost: T::zero(),
+    }));
+
+    while let Some(std::cmp::Reverse(e)) = que.pop() {
+        let current_vertex = e.current.to_usize().unwrap();
+        if dist[current_vertex] < e.cost {
+            // visited
+            continue;
+        }
+
+        for next_edge in graph[current_vertex].iter() {
+            let next_vertex = next_edge.to.to_usize().unwrap();
+            let expected_cost = dist[current_vertex] + next_edge.cost;
+            if dist[next_vertex] > expected_cost {
+                prevs[next_vertex] = e.current;
+                dist[next_vertex] = expected_cost;
+                que.push(std::cmp::Reverse(DijkstraEdge {
+                    prev: T::from_usize(current_vertex).unwrap(),
+                    current: T::from_usize(next_vertex).unwrap(),
+                    cost: expected_cost,
+                }));
+            }
+        }
+    }
+    (dist, prevs)
+}
+
+fn build_path<T>(prev: &Vec<T>, goal: usize) -> Vec<usize>
+where
+    T: num::Integer + num::Signed + num::One + num::FromPrimitive + num::ToPrimitive + Copy + Clone,
+{
+    if prev[goal] == -two::<T>() {
+        // start から goal への道がない
+        return vec![];
+    }
+
+    let mut path = vec![];
+    let mut node = T::from_usize(goal).unwrap();
+
+    // start に遡るまで loop
+    while node != -T::one() {
+        let v = node.to_usize().unwrap();
+        path.push(v);
+        node = prev[v];
+    }
+    path.reverse();
+    path
+}
 
 fn main() {
     input! {
@@ -17,16 +120,17 @@ fn main() {
         in_uv: [(usize, usize); in_n - 1],
     }
 
-    let mut graph: Graph = vec![vec![]; in_n];
+    type T = i32;
+    let mut graph: Graph<T> = vec![vec![]; in_n];
     for &(u, v) in in_uv.iter() {
-        graph[u - 1].push(Edge {
-            from: u - 1,
-            to: v - 1,
+        graph[u - 1].push(Edge::<T> {
+            src: u as T - 1,
+            to: v as T - 1,
             cost: 1,
         });
-        graph[v - 1].push(Edge {
-            from: v - 1,
-            to: u - 1,
+        graph[v - 1].push(Edge::<T> {
+            src: v as T - 1,
+            to: u as T - 1,
             cost: 1,
         });
     }
@@ -39,44 +143,4 @@ fn main() {
             print!(" ");
         }
     }
-}
-
-fn dijkstra(graph: &Graph, start: usize) -> (Vec<i64>, Vec<i64>) {
-    let mut prev: Vec<i64> = vec![-2; graph.len()]; // 直前に通る頂点
-    let mut dist: Vec<i64> = vec![std::i64::MAX; graph.len()];
-
-    let mut heap = std::collections::BinaryHeap::new();
-    heap.push(std::cmp::Reverse((0, start)));
-
-    dist[start] = 0;
-    while let Some(std::cmp::Reverse((cost, node))) = heap.pop() {
-        if dist[node] < cost {
-            continue;
-        }
-        for edge in &graph[node] {
-            let next_cost = cost + edge.cost;
-            if next_cost < dist[edge.to] {
-                prev[edge.to] = node as i64;
-                dist[edge.to] = next_cost;
-                heap.push(std::cmp::Reverse((next_cost, edge.to)));
-            }
-        }
-    }
-    (dist, prev)
-}
-
-fn build_path(prev: &Vec<i64>, goal: usize) -> Vec<usize> {
-    if prev[goal] == -1 {
-        // start から goal への道がない
-        return vec![];
-    }
-
-    let mut path = vec![];
-    let mut node = goal as i64;
-    while node != -2 {
-        path.push(node as usize);
-        node = prev[node as usize];
-    }
-    path.reverse();
-    path
 }
