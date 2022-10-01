@@ -26,7 +26,7 @@ fn main() {
             dp[i + 1][j] = 0;
         }
         let x = in_ab[i].1;
-        for j in 0..in_s {
+        for j in 0..=in_s {
             if j < x {
                 continue;
             }
